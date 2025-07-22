@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>London Time</title>
+    <!-- Tailwind CSS CDN for easy styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for the app */
+        body {
+            font-family: 'Inter', sans-serif; /* Using Inter font as per instructions */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f4f8; /* Light background color */
+            margin: 0;
+            padding: 1rem; /* Add some padding for smaller screens */
+            box-sizing: border-box;
+        }
+        .time-container {
+            background-color: #ffffff;
+            padding: 2.5rem 3.5rem; /* More padding for a spacious look */
+            border-radius: 1.5rem; /* More rounded corners */
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); /* Deeper shadow */
+            text-align: center;
+            max-width: 90%; /* Ensure it's responsive */
+            width: 400px; /* Max width for desktop */
+        }
+        .time-display {
+            font-size: 4.5rem; /* Larger font size for time */
+            font-weight: 700; /* Bold time */
+            color: #1a202c; /* Darker text color */
+            margin-bottom: 1rem;
+            letter-spacing: -0.05em; /* Slightly tighter letter spacing */
+        }
+        .date-display {
+            font-size: 1.25rem; /* Slightly larger date font */
+            color: #4a5568; /* Medium gray for date */
+            margin-bottom: 1.5rem;
+        }
+        .timezone-info {
+            font-size: 0.9rem;
+            color: #718096; /* Lighter gray for timezone info */
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 640px) {
+            .time-container {
+                padding: 2rem;
+            }
+            .time-display {
+                font-size: 3.5rem; /* Adjust for smaller screens */
+            }
+            .date-display {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="time-container">
+        <h1 class="text-3xl font-semibold text-gray-800 mb-4">Current Time in London</h1>
+        <div id="london-time" class="time-display">
+            --:--:--
+        </div>
+        <div id="london-date" class="date-display">
+            -- --, ----
+        </div>
+        <div class="timezone-info">
+            (Greenwich Mean Time / British Summer Time)
+        </div>
+    </div>
+
+    <script>
+        // Function to update the time
+        function updateLondonTime() {
+            // Create a new Date object
+            const now = new Date();
+
+            // Options for formatting the time in London's timezone
+            // 'en-GB' locale for British date/time format
+            // 'Europe/London' timezone
+            const timeOptions = {
+                hour: '2-digit',
+                minute: '2-digit',
+                second: '2-digit',
+                hour12: false, // 24-hour format
+                timeZone: 'Europe/London'
+            };
+
+            const dateOptions = {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                timeZone: 'Europe/London'
+            };
+
+            // Format the time and date
+            const londonTime = now.toLocaleTimeString('en-GB', timeOptions);
+            const londonDate = now.toLocaleDateString('en-GB', dateOptions);
+
+            // Update the HTML elements
+            document.getElementById('london-time').textContent = londonTime;
+            document.getElementById('london-date').textContent = londonDate;
+        }
+
+        // Update the time immediately when the page loads
+        updateLondonTime();
+
+        // Update the time every second
+        setInterval(updateLondonTime, 1000);
+    </script>
+
+</body>
+</html>
